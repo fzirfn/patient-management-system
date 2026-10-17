@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24" width="24" height="18" rx="2" style="border-radius:2px; box-shadow:0 0 1px rgba(0,0,0,0.2);">
+  <defs>
+    <pattern id="stripes" width="32" height="3.428" patternUnits="userSpaceOnUse">
+      <rect width="32" height="1.714" fill="#CC0000"/>
+      <rect y="1.714" width="32" height="1.714" fill="#FFFFFF"/>
+    </pattern>
+  </defs>
+  <rect width="32" height="24" fill="url(#stripes)"/>
+  <rect width="16" height="12" fill="#000066"/>
+  <circle cx="8" cy="6" r="3.5" fill="#FFCC00"/>
+  <circle cx="9.2" cy="6" r="3" fill="#000066"/>
+  <polygon points="9.5,4 10,5.5 11.5,5 10.5,6.2 11.8,7.2 10.2,7.5 10,9 9,7.8 8,8.8 8.2,7.3 7,6.8 8.2,6 7.8,4.5 9,5.2" fill="#FFCC00"/>
+</svg>

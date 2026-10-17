@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="High-precision, accessible Patient Management System UI with real-time triage, search, filtering, and comprehensive medical dossier slide-in drawer.">
+  <title>患者管理 · Patient Management System</title>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Modular CSS Architecture -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <link rel="icon" type="image/svg+xml" href="assets/img/logo.svg">
+</head>
+<body>
+  <div class="app-container">
+
+    <!-- Mobile Navigation Backdrop -->
+    <div class="drawer-backdrop" id="sidebarBackdrop" aria-hidden="true"></div>
+
+    <!-- ==========================================================================
+         1. Fixed Left Navigation Sidebar (~240px, Background #0052CC)
+         ========================================================================== -->
+    <aside class="app-sidebar" id="appSidebar" aria-label="Main Navigation">
+      <!-- Sidebar Brand Header -->
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img src="assets/img/logo.svg" alt="AlphaCloud Clinic Logo" width="28" height="28">
+        </div>
+        <div class="sidebar-brand-text">
+          <span class="sidebar-brand-name">AlphaCloud Health</span>
+          <span class="sidebar-brand-sub">Clinical Workstation</span>
+        </div>
+      </div>
+
+      <!-- Navigation Menu -->
+      <nav class="sidebar-nav" aria-label="Sidebar Menu">
+        <!-- 1. Dashboard -->
+        <a href="#dashboard" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-icon">
+              <img src="assets/icons/dashboard.svg" alt="" aria-hidden="true">
+            </span>
+            <span class="nav-label">Dashboard</span>
+          </div>
+        </a>
+
+        <!-- 2. Patient (Active State Highlighted) -->
+        <a href="#patient" class="nav-item active" aria-current="page">
+          <div class="nav-item-content">
+            <span class="nav-icon">
+              <img src="assets/icons/patient.svg" alt="" aria-hidden="true">
+            </span>
+            <span class="nav-label">Patient</span>
+          </div>
+        </a>
+
+        <!-- 3. Queue (Counter Badge: 2) -->
+        <a href="#queue" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-icon">
+              <img src="assets/icons/queue.svg" alt="" aria-hidden="true">
+            </span>
+            <span class="nav-label">Queue</span>
+          </div>
+          <span class="nav-badge" aria-label="2 patients in queue">2</span>
+        </a>
+
+        <!-- 4. Consultation -->
+        <a href="#consultation" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-icon">
+              <img src="assets/icons/consultation.svg" alt="" aria-hidden="true">
+            </span>
+            <span class="nav-label">Consultation</span>
+          </div>
+        </a>
+
+        <!-- 5. Warehouse -->
+        <a href="#warehouse" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-icon">
+              <img src="assets/icons/warehouse.svg" alt="" aria-hidden="true">
+            </span>
+            <span class="nav-label">Warehouse</span>
+          </div>
+        </a>
+
+        <!-- 6. Reports -->
+        <a href="#reports" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-icon">
+              <img src="assets/icons/reports.svg" alt="" aria-hidden="true">
+            </span>
+            <span class="nav-label">Reports</span>
+          </div>
+        </a>
+
+        <!-- 7. Appointment (Counter Badge: 5) -->
+        <a href="#appointment" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-icon">
+              <img src="assets/icons/appointment.svg" alt="" aria-hidden="true">
+            </span>
+            <span class="nav-label">Appointment</span>
+          </div>
+          <span class="nav-badge" aria-label="5 appointments today">5</span>
+        </a>
+
+        <!-- 8. Settings -->
+        <a href="#settings" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-icon">
+              <img src="assets/icons/settings.svg" alt="" aria-hidden="true">
+            </span>
+            <span class="nav-label">Settings</span>
+          </div>
+        </a>
+      </nav>
+
+      <!-- Bottom Card: Update to Pro -->
+      <div class="sidebar-footer">
+        <div class="pro-card">
+          <div class="pro-card-header">
+            <span class="pro-badge">PRO</span>
+            <span class="pro-card-title">Update to Pro</span>
+          </div>
+          <p class="pro-card-desc">Get multi-clinic sync, automated SMS triage reminders, and unlimited records.</p>
+          <button type="button" class="btn btn-primary btn-sm pro-card-cta" id="proCardCta">
+            Upgrade Now
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ==========================================================================
+         2. Main Application Area
+         ========================================================================== -->
+    <div class="app-content-wrapper">
+      
+      <!-- Top Header -->
+      <header class="app-header">
+        <div class="header-left">
+          <button type="button" class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+            <img src="assets/icons/menu.svg" alt="" aria-hidden="true">
+          </button>
+          <div class="header-title-group">
+            <h1 class="page-title">患者管理</h1>
+            <p class="page-subtitle">Patient Management & Directory · Central Clinical Triage</p>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Search Bar (min-width 240px, light grey bg, prefixed search icon) -->
+          <div class="search-wrapper" role="search">
+            <span class="search-icon" aria-hidden="true">
+              <img src="assets/icons/search.svg" alt="" width="18" height="18">
+            </span>
+            <input type="search" 
+                   class="search-input" 
+                   id="searchInput" 
+                   placeholder="Search (Press '/' to focus)" 
+                   aria-label="Search patients by name, ID, phone, or nationality">
+            <button type="button" class="search-clear-btn" id="searchClearBtn" aria-label="Clear search input">
+              ✕
+            </button>
+          </div>
+
+          <!-- Add Patient Button ("+" button with blue styling) -->
+          <button type="button" class="btn btn-primary" id="addPatientBtn" aria-label="Add new patient record">
+            <img src="assets/icons/plus.svg" alt="" aria-hidden="true">
+            <span>Add Patient</span>
+          </button>
+
+          <!-- User Profile Section -->
+          <div class="user-profile-menu">
+            <button type="button" class="user-profile-btn" id="userProfileBtn" aria-label="User profile: Dr. Alexander Wright">
+              <div class="user-avatar-wrap">
+                <img src="assets/img/avatar-user.svg" alt="Doctor profile avatar">
+              </div>
+              <div class="user-info">
+                <span class="user-name">Dr. Alexander Wright</span>
+                <span class="user-role">Chief Medical Officer</span>
+              </div>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content Area -->
+      <main class="app-main" id="mainContent">
+        
+        <!-- Clinical Metrics Bar -->
+        <section class="stats-bar" aria-label="Quick statistics">
+          <div class="stat-card">
+            <div class="stat-content">
+              <span class="stat-label">Total Patients</span>
+              <span class="stat-value tabular-nums" id="statTotalPatients">12</span>
+              <span class="stat-sub">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+                +14% this month
+              </span>
+            </div>
+            <div class="stat-icon-wrap blue">
+              <img src="assets/icons/patient.svg" alt="" aria-hidden="true">
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-content">
+              <span class="stat-label">In Waiting Queue</span>
+              <span class="stat-value tabular-nums" id="statQueuePatients">2</span>
+              <span class="stat-sub" style="color: var(--color-primary);">Active in triage counter</span>
+            </div>
+            <div class="stat-icon-wrap blue">
+              <img src="assets/icons/queue.svg" alt="" aria-hidden="true">
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-content">
+              <span class="stat-label">VIP Registered</span>
+              <span class="stat-value tabular-nums" id="statVipPatients">5</span>
+              <span class="stat-sub" style="color: var(--color-vip-text);">High-priority care status</span>
+            </div>
+            <div class="stat-icon-wrap gold">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-content">
+              <span class="stat-label">Today's Appointments</span>
+              <span class="stat-value tabular-nums" id="statAppointments">5</span>
+              <span class="stat-sub" style="color: var(--color-text-success);">All slots confirmed</span>
+            </div>
+            <div class="stat-icon-wrap green">
+              <img src="assets/icons/appointment.svg" alt="" aria-hidden="true">
+            </div>
+          </div>
+        </section>
+
+        <!-- Table Card Container -->
+        <section class="table-card-container" aria-label="Patient Registry Table">
+          
+          <!-- Table Toolbar -->
+          <div class="table-toolbar">
+            <div class="toolbar-left">
+              <!-- VIP Filter -->
+              <select class="filter-select" id="vipFilter" aria-label="Filter by patient VIP priority status">
+                <option value="all">Priority: All Patients</option>
+                <option value="vip">⭐ VIP Only</option>
+                <option value="regular">Standard Care</option>
+              </select>
+
+              <!-- Nationality Filter -->
+              <select class="filter-select" id="nationalityFilter" aria-label="Filter by nationality">
+                <option value="all">Nationality: All Countries</option>
+                <option value="Singapore">Singapore</option>
+                <option value="Malaysia">Malaysia</option>
+                <option value="China">China</option>
+                <option value="Japan">Japan</option>
+                <option value="United States">United States</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="Australia">Australia</option>
+              </select>
+            </div>
+
+            <div class="toolbar-right">
+              <!-- Refresh Data Button -->
+              <button type="button" class="btn btn-outline btn-sm" id="refreshTableBtn" aria-label="Refresh patient data" data-tooltip="Refresh & Sync Data">
+                <img src="assets/icons/refresh.svg" alt="" aria-hidden="true">
+                <span>Refresh</span>
+              </button>
+
+              <!-- Export CSV Button -->
+              <button type="button" class="btn btn-outline btn-sm" id="exportCsvBtn" aria-label="Export patient roster to CSV file" data-tooltip="Download Patient List (CSV)">
+                <img src="assets/icons/export.svg" alt="" aria-hidden="true">
+                <span>Export CSV</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Bulk Selection Action Bar -->
+          <div class="bulk-bar" id="bulkBar" aria-live="polite">
+            <span id="bulkCount">0 patients selected</span>
+            <div class="bulk-actions">
+              <button type="button" class="btn btn-outline btn-sm" id="bulkExportBtn">Export Selected</button>
+              <button type="button" class="btn btn-outline btn-sm" id="bulkVipBtn">Mark as VIP</button>
+              <button type="button" class="btn btn-danger btn-sm" id="bulkDeleteBtn">Delete Selected</button>
+            </div>
+          </div>
+
+          <!-- Table Element -->
+          <div class="table-responsive">
+            <table class="patient-table" id="patientTable" aria-label="Patient Directory">
+              <thead>
+                <tr>
+                  <th class="col-check">
+                    <input type="checkbox" class="custom-checkbox" id="selectAllCheckbox" aria-label="Select all patients on this page">
+                  </th>
+                  <th class="sortable sorted-desc" data-sort="name" scope="col" aria-sort="none">
+                    <div class="th-content">
+                      <span>Patient Name</span>
+                      <span class="th-sort-icon">
+                        <img src="assets/icons/sort.svg" alt="" aria-hidden="true">
+                      </span>
+                    </div>
+                  </th>
+                  <th class="sortable" data-sort="contact" scope="col" aria-sort="none">
+                    <div class="th-content">
+                      <span>Contact</span>
+                      <span class="th-sort-icon">
+                        <img src="assets/icons/sort.svg" alt="" aria-hidden="true">
+                      </span>
+                    </div>
+                  </th>
+                  <th class="sortable" data-sort="nationality" scope="col" aria-sort="none">
+                    <div class="th-content">
+                      <span>Nationality</span>
+                      <span class="th-sort-icon">
+                        <img src="assets/icons/sort.svg" alt="" aria-hidden="true">
+                      </span>
+                    </div>
+                  </th>
+                  <th class="sortable" data-sort="datetime" scope="col" aria-sort="descending">
+                    <div class="th-content">
+                      <span>Datetime</span>
+                      <span class="th-sort-icon">
+                        <img src="assets/icons/sort.svg" alt="" aria-hidden="true">
+                      </span>
+                    </div>
+                  </th>
+                  <th scope="col" class="action-cell">
+                    <span class="sr-only">Actions</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="patientTableBody">
+                <!-- Dynamically populated by table.js -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination Footer -->
+          <div class="table-pagination">
+            <div class="pagination-info" id="paginationInfo" aria-live="polite">
+              Showing 1 to 10 of 12 results
+            </div>
+
+            <div class="pagination-controls" id="paginationControls">
+              <!-- Rendered dynamically by table.js -->
+            </div>
+
+            <div class="page-size-selector">
+              <label for="pageSizeSelect">Per page:</label>
+              <select class="filter-select" id="pageSizeSelect" style="height: 32px; padding-top: 0; padding-bottom: 0;">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+              </select>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- ==========================================================================
+         3. Patient Detail Slide-in Panel (Right Drawer)
+         ========================================================================== -->
+    <div class="drawer-backdrop" id="drawerBackdrop" aria-hidden="true"></div>
+
+    <aside class="patient-drawer" id="patientDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerPatientTitle" aria-hidden="true">
+      <!-- Drawer Header -->
+      <div class="drawer-header">
+        <div class="drawer-header-title">
+          <h2 class="drawer-title" id="drawerPatientTitle">Patient Dossier</h2>
+          <span class="drawer-patient-id" id="drawerId">PT-10024</span>
+        </div>
+        <button type="button" class="btn-icon btn-ghost" id="closeDrawerBtn" aria-label="Close patient details panel">
+          <img src="assets/icons/x.svg" alt="" aria-hidden="true">
+        </button>
+      </div>
+
+      <!-- Drawer Body -->
+      <div class="drawer-body">
+        
+        <!-- Profile Banner -->
+        <div class="drawer-profile-card">
+          <div class="drawer-avatar" id="drawerAvatar">EV</div>
+          <div class="drawer-profile-details">
+            <div class="drawer-patient-name">
+              <span id="drawerName">Eleanor Vance</span>
+              <span class="badge badge-vip" id="drawerVipBadge">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                VIP
+              </span>
+            </div>
+            <div class="status-indicator">
+              <span class="status-dot active"></span>
+              <span>Active in Triage Registry</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Demographics Info Section -->
+        <div class="info-section">
+          <div class="info-section-heading">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            <span>Biographical & Contact Information</span>
+          </div>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="info-label">Contact Number</span>
+              <span class="info-value" id="drawerContact">+65 9123 4567</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Email Address</span>
+              <span class="info-value" id="drawerEmail">eleanor.vance@zenith.sg</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Nationality</span>
+              <div class="info-value" id="drawerNationality">
+                <img src="assets/img/flag-sg.svg" alt="" class="flag-icon">
+                <span>Singapore</span>
+              </div>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Date of Birth & Age</span>
+              <span class="info-value" id="drawerBirthdayAge">14 May 1988 (38 years, Female)</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">NRIC / Passport Number</span>
+              <span class="info-value tabular-nums" id="drawerNric">S8812345Z</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Occupation</span>
+              <span class="info-value" id="drawerOccupation">Senior Neurological Researcher</span>
+            </div>
+            <div class="info-item" style="grid-column: span 2;">
+              <span class="info-label">Last Visit Date & Duration</span>
+              <span class="info-value" id="drawerLastVisit">12 Sep 2026 · Duration: 45 mins</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Clinical Alerts & Medical Remarks -->
+        <div class="info-section">
+          <div class="info-section-heading">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <span>Medical Remarks & Allergies</span>
+          </div>
+          <div class="remarks-card" id="drawerRemarksCard">
+            <strong>Critical Medical Alert:</strong>
+            <p>Severe penicillin allergy. History of mild seasonal asthma. Requires latex-free gloves during examination.</p>
+          </div>
+        </div>
+
+        <!-- Upcoming Appointments Section -->
+        <div class="info-section">
+          <div class="info-section-heading">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span>Upcoming Appointments</span>
+          </div>
+          <div class="appointments-list" id="drawerAppointmentsList">
+            <!-- Dynamically populated by panel.js -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Drawer Footer Action Bar -->
+      <div class="drawer-footer">
+        <button type="button" class="btn btn-outline" id="drawerPrintBtn">
+          Print Summary
+        </button>
+        <button type="button" class="btn btn-primary" id="drawerBookBtn">
+          Book Appointment
+        </button>
+      </div>
+    </aside>
+
+    <!-- ==========================================================================
+         4. Add Patient Modal Dialog
+         ========================================================================== -->
+    <div class="modal-backdrop" id="addPatientModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2 class="modal-title" id="modalTitle">Register New Patient</h2>
+          <button type="button" class="btn-icon btn-ghost" id="closePatientModalBtn" aria-label="Close dialog">
+            <img src="assets/icons/x.svg" alt="" aria-hidden="true">
+          </button>
+        </div>
+
+        <form id="addPatientForm">
+          <div class="modal-body">
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="patientFullName" class="form-label required">Full Name</label>
+                <input type="text" id="patientFullName" class="form-control" placeholder="e.g. Liam Christopher" required>
+              </div>
+
+              <div class="form-group">
+                <label for="patientNric" class="form-label required">NRIC / Passport</label>
+                <input type="text" id="patientNric" class="form-control" placeholder="e.g. S9234567A" required>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="patientContact" class="form-label required">Contact Phone</label>
+                <input type="tel" id="patientContact" class="form-control" placeholder="+65 8123 4567" required>
+              </div>
+
+              <div class="form-group">
+                <label for="patientEmail" class="form-label">Email Address</label>
+                <input type="email" id="patientEmail" class="form-control" placeholder="patient@example.com">
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="patientNationality" class="form-label required">Nationality</label>
+                <select id="patientNationality" class="form-control filter-select" required>
+                  <option value="Singapore" selected>Singapore</option>
+                  <option value="Malaysia">Malaysia</option>
+                  <option value="China">China</option>
+                  <option value="Japan">Japan</option>
+                  <option value="United States">United States</option>
+                  <option value="United Kingdom">United Kingdom</option>
+                  <option value="Australia">Australia</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="patientBirthday" class="form-label required">Date of Birth</label>
+                <input type="date" id="patientBirthday" class="form-control" value="1992-06-15" required>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="patientGender" class="form-label">Gender</label>
+                <select id="patientGender" class="form-control filter-select">
+                  <option value="Female">Female</option>
+                  <option value="Male">Male</option>
+                  <option value="Non-binary">Non-binary</option>
+                  <option value="Prefer not to say">Prefer not to say</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="patientOccupation" class="form-label">Occupation</label>
+                <input type="text" id="patientOccupation" class="form-control" placeholder="e.g. Biomedical Engineer">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-checkbox-label">
+                <input type="checkbox" id="patientIsVip" class="custom-checkbox">
+                <span>Assign <strong>VIP Patient Care</strong> priority badge</span>
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label for="patientRemarks" class="form-label">Medical Remarks & Known Allergies</label>
+              <textarea id="patientRemarks" class="form-control" rows="3" placeholder="e.g. Penicillin allergy, mild hypertension, requires wheelchair assistance..."></textarea>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline" id="cancelPatientModalBtn">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Patient Record</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Application Logic Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/sidebar.js"></script>
+  <script src="js/table.js"></script>
+  <script src="js/panel.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+/**
+ * Design Tokens
+ * Patient Management System (患者管理)
+ */
+:root {
+  /* Colors */
+  --color-primary: #0052CC;
+  --color-primary-hover: #0747A6;
+  --color-primary-active: #003882;
+  --color-primary-light: #E8F0FE;
+  --color-primary-subtle: #F0F5FF;
+  
+  --color-text: #333333;
+  --color-text-muted: #666666;
+  --color-text-subtle: #8993A4;
+  --color-text-inverse: #FFFFFF;
+  --color-text-link: #0052CC;
+  
+  --color-border: #E5E5E5;
+  --color-border-subtle: #EBECF0;
+  --color-border-strong: #C1C7D0;
+  
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #F8F9FA;
+  --color-bg-hover: #F1F5FD;
+  --color-bg-active: #E3EDFC;
+  --color-bg-muted: #F4F5F7;
+  --color-bg-sidebar: #0052CC;
+  --color-bg-sidebar-hover: #0747A6;
+  --color-bg-sidebar-active: #0747A6;
+  
+  --color-success: #36B37E;
+  --color-success-bg: #E3FCEF;
+  --color-success-text: #006644;
+  --color-text-success: #006644;
+  
+  --color-vip: #FFD700;
+  --color-vip-bg: #FFF9DB;
+  --color-vip-text: #7A5700;
+  --color-vip-border: #E5C100;
+
+  --color-warning: #FFAB00;
+  --color-warning-bg: #FFFAE6;
+  --color-warning-text: #7A5300;
+  
+  --color-danger: #DE350B;
+  --color-danger-bg: #FFEBE6;
+  --color-danger-text: #BF2600;
+
+  /* Typography */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-size-xs: 12px;
+  --font-size-sm: 13px;
+  --font-size-base: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+
+  /* Spacing */
+  --space-0-5: 2px;
+  --space-1: 4px;
+  --space-1-5: 6px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* Elevation (Pure neutral shadows) */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 8px -2px rgba(0, 0, 0, 0.10), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 24px -4px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.06);
+  --shadow-panel: -6px 0 24px -2px rgba(0, 0, 0, 0.14);
+  --shadow-dropdown: 0 6px 16px rgba(0, 0, 0, 0.10), 0 1px 3px rgba(0, 0, 0, 0.05);
+
+  /* Radius */
+  --radius-xs: 3px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.2, 0, 0, 1);
+  --transition-base: 220ms cubic-bezier(0.2, 0, 0, 1);
+  --transition-slow: 350ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layout dimensions */
+  --sidebar-width: 240px;
+  --sidebar-collapsed-width: 72px;
+  --header-height: 72px;
+  --drawer-width: 480px;
+
+  /* Focus ring */
+  --focus-ring: 0 0 0 2px #FFFFFF, 0 0 0 4px var(--color-primary);
+}
